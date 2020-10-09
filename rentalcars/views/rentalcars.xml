@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+	<!-- formulario crear carro -->
+	<record model="ir.ui.view" id="car_form_view">
+            <field name="name">car.form</field>
+            <field name="model">rentalcars.car</field>
+            <field name="arch" type="xml">
+                <form string="Car Form">
+                    <sheet>
+                        <group>
+                            <field name="model"/>
+                            <field name="year"/>
+                            <field name="color"/>
+                            <field name="status"/>
+                            <field name="client_ids" attrs="{'invisible':[('status', '=', 'Libre')]}" />
+                            
+                        </group>
+                        
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+        
+        
+        <record model="ir.ui.view" id="car_search_view">
+            <field name="name">car.search</field>
+            <field name="model">rentalcars.car</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="model"/>
+                    <field name="year"/>
+                    <field name="color"/>
+                    <field name="status"/>
+                    
+                </search>
+            </field>
+        </record>
+        
+        
+        <!-- override the automatically generated list view for cars -->
+        <!-- Vista que aparece en la pantalla (carros) principal (solo si existe data de carros) -->
+        <record model="ir.ui.view" id="car_tree_view">
+            <field name="name">car.tree</field>
+            <field name="model">rentalcars.car</field>
+            <field name="arch" type="xml">
+                <tree string="Car Tree">
+                    <field name="model"/>
+                    <field name="year"/>
+                    <field name="color"/>
+                    <field name="status"/>
+                    <field name="client_ids"/>
+                </tree>
+            </field>
+        </record>
+        
+        
+
+        <!-- window action -->
+        <!--
+            The following tag is an action definition for a "window action",
+            that is an action opening a view or a set of views
+        -->
+        <record model="ir.actions.act_window" id="car_list_action">
+            <field name="name">Cars</field>
+            <field name="res_model">rentalcars.car</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create the first car
+                </p>
+            </field>
+        </record>
+
+        <!-- top level menu: no parent -->
+        <menuitem id="main_rentalcars_menu" name="cars rent"/>
+        <!-- A first level in the left side menu is needed
+             before using action= attribute -->
+        <menuitem id="rentalcars_menu" name="Register"
+                  parent="main_rentalcars_menu"/>
+        <!-- the following menuitem should appear *after*
+             its parent rentalcars_menu and *after* its
+             action car_list_action -->
+        <menuitem id="cars_menu" name="Cars" parent="rentalcars_menu"
+                  action="car_list_action"/>
+        <!-- Full id location:
+             action="rentalcars.car_list_action"
+             It is not required when it is the same module -->
+             
+             
+        <!-- client form view -->
+        <record model="ir.ui.view" id="client_form_view">
+            <field name="name">client.form</field>
+            <field name="model">rentalcars.client</field>
+            <field name="arch" type="xml">
+                <form string="Client Form">
+                    <sheet>
+                        <group>
+                            <group string="Personal information">
+                                
+                                <field name="name"/>
+                                <field name="address"/>
+                                <field name="phone"/>
+                            </group>
+                            <group string="Car information">
+                                <field name="car_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        
+	
+	<!-- Menu clientes -->
+        <record model="ir.actions.act_window" id="client_list_action">
+            <field name="name">Clients</field>
+            <field name="res_model">rentalcars.client</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="client_menu" name="Clients"
+                  parent="rentalcars_menu"
+                  action="client_list_action"/>
+     
+
+</odoo>
+
+
